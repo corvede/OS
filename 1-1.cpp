@@ -58,7 +58,8 @@ void FCFS(ifstream& infile, ofstream& outfile)
 		}
 	}
 
-	outfile << "Process" << setw(10) << "Burst time" << setw(10) << "Waiting time" << setw(10) << "Turnaround time";
+	//outfile << left << setfill(' ') << "Process" << setw(13) << "Burst time" << setw(13) << "Waiting time" << setw(13) << "Turnaround time";
+	outfile << "Process\t\tBurst time\tWaiting time\tTurnaround time";
 	outfile << endl;
 
 	for(i = 0; i < process_count; i++)
@@ -66,15 +67,17 @@ void FCFS(ifstream& infile, ofstream& outfile)
 		tat[i] = job[i] + wt[i];
 		avwt += wt[i];
 		avtat += tat[i];
-		outfile << "P["  << i+1 << "]" << setw(5) << job[i] << setw(5) << wt[i] << setw(5) << tat[i];
+		//outfile << right << "P[" << i+1 << "]"  << setw(10) <<  job[i]  << setw(10) <<  wt[i]  << setw(10) <<  tat[i];
+		outfile << "P[" << i+1 << "]"  << "\t\t" <<  job[i]  << "\t\t" <<  wt[i]  << "\t\t" <<  tat[i];
 		outfile << endl;
 	}
 
 	avwt /= i;
 	avtat /= i;
-	outfile << "Average Waiting time: " << avwt;
+	outfile << "\nAverage Waiting time: " << avwt;
+	outfile	<< endl;
+	outfile << "Average Turnaround time: " << avtat;
 	outfile << endl;
-	outfile << "Average Turnaround time: " << avtat << endl;
 
 	return;
 }
