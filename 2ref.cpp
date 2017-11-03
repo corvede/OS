@@ -11,22 +11,16 @@ class Process
     public:
         Process()
         {
-            pid = 0; arrival = 0; burst1 = 0; context_switch = 0; burst2 = 0;
-        }
-        friend istream& operator >> (istream &input, Process &process)
-        {
-            input >> process.pid;
-            input >> process.arrival;
-            input >> process.burst1;
-            input >> process.context_switch;
-            input >> process.burst2;
-            return input;
+            pid = 0; arrival = 0; burst1 = 0; waiting_time = 0;
+            turnaround_time = 0; first_time_run = true;
         }
         int pid;
         int arrival;
         int burst1;
-        int context_switch;
-        int burst2;
+        int waiting_time;
+        int turnaround_time;
+        bool first_time_run;
+
 };
 
 //Comparison class to make arrival sorted so that top() always smallest
