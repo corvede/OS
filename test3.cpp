@@ -56,6 +56,7 @@ class compare_burst
 void SRTF(ifstream& infile, ofstream& outfile)
 {
     int process_count = 0;
+    int temp;
     int wttotal, tattotal;
 
     int numJob;
@@ -100,19 +101,40 @@ void SRTF(ifstream& infile, ofstream& outfile)
             else break;
         }
 
+        Process id;
+        Process_data temp_wt;
+        for(i = 0; i < process_count; ++i)
+        {
+            if(id.pid = i && temp_wt.first_time_run = true)
+            {
+                temp_wt.first_time_run = false;
+                result.push_back(temp_wt);
+                temp_wt.waiting_time = (time-1) - ongoing.arrival;
+                result.push_back(temp_wt);
+            }
+            else
+            {
+                temp_wt.first_time_run = true;
+                result.push_back(temp_wt);
+            }
+        }
+        Process_data temp_tat;
+        temp_tat.turnaround_time = (time+1) - ongoing.arrival;
+        result.push_back(temp_tat);
+
         ongoing = get_cpu.top();
         get_cpu.pop();
         --ongoing.burst;
 
         if(ongoing.burst == 0)
         {
-            cout << "P[" << ongoing.pid << "]" << "\t\t" << time - ongoing.burst << "\t\t" << ((time+1) - ongoing.arrival) << endl;
+            cout << "P[" << ongoing.pid << "]" << "\t\t" << temp_wt.waiting_time << "\t\t" << temp_tat.turnaround_time << endl;
             outfile << "P[" << ongoing.pid << "]" << "\t\t" << time - ongoing.burst << "\t\t" << ((time+1) - ongoing.arrival) << endl;
         }
         else get_cpu.push(ongoing);
 
         wttotal += time - ongoing.burst;
-        tattotal += ((time+1) - ongoing.arrival);
+        tattotal += temp_tat.turnaround_time;
     }
 
     if(ongoing.burst != 0)
